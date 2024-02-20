@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
 import 'package:offline_data_display/view_model/football_controller.dart';
 
 class HomeScreen extends GetView<CryptoController> {
@@ -28,38 +26,46 @@ class HomeScreen extends GetView<CryptoController> {
             GetBuilder<CryptoController>(
               init: CryptoController(),
               builder: (controller) => Expanded(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(controller
-                                .cryptoList[index].image ??
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRN9n-IgNtWZ2VJVrEYOcTAhnvbqlOaT2cOIQBF5Weh2RsL0-6cDCXgxdzbT9hl_PMgOk&usqp=CAU'),
-                      ),
-                      title: Text(
-                        controller.cryptoList[index].name ?? 'Empty',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                          "Price : ${controller.cryptoList[index].currentPrice ?? 'Empty'}"),
-                      trailing: Text(
-                        controller.cryptoList[index].symbol
-                                .toString()
-                                .capitalize ??
-                            'Empty',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                child: controller.loading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.orange,
+                          strokeWidth: 4,
                         ),
+                      )
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: NetworkImage(controller
+                                      .cryptoList[index].image ??
+                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRN9n-IgNtWZ2VJVrEYOcTAhnvbqlOaT2cOIQBF5Weh2RsL0-6cDCXgxdzbT9hl_PMgOk&usqp=CAU'),
+                            ),
+                            title: Text(
+                              controller.cryptoList[index].name ?? 'Empty',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                                "Price : ${controller.cryptoList[index].currentPrice ?? 'Empty'}"),
+                            trailing: Text(
+                              controller.cryptoList[index].symbol
+                                      .toString()
+                                      .capitalize ??
+                                  'Empty',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
+                        itemCount: controller.cryptoList.length,
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10),
-                  itemCount: controller.cryptoList.length,
-                ),
               ),
             ),
           ],
