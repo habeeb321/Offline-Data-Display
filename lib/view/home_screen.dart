@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:offline_data_display/view_model/football_controller.dart';
+import 'package:offline_data_display/view_model/crypto_controller.dart';
 
 class HomeScreen extends GetView<CryptoController> {
   const HomeScreen({super.key});
@@ -73,7 +73,9 @@ class HomeScreen extends GetView<CryptoController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          controller.checkInternetConnection();
+        },
         label: const Text('Check Connectivity'),
       ),
     );
