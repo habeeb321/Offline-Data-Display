@@ -39,9 +39,20 @@ class HomeScreen extends GetView<CryptoController> {
                           return ListTile(
                             leading: CircleAvatar(
                               radius: 30,
-                              backgroundImage: NetworkImage(controller
-                                      .cryptoList[index].image ??
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRN9n-IgNtWZ2VJVrEYOcTAhnvbqlOaT2cOIQBF5Weh2RsL0-6cDCXgxdzbT9hl_PMgOk&usqp=CAU'),
+                              backgroundColor: Colors.black,
+                              child: CircleAvatar(
+                                radius: 27,
+                                child: Text(
+                                  controller.cryptoList[index].symbol
+                                          .toString()
+                                          .capitalize ??
+                                      'Empty',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ),
                             title: Text(
                               controller.cryptoList[index].name ?? 'Empty',
@@ -51,10 +62,7 @@ class HomeScreen extends GetView<CryptoController> {
                             subtitle: Text(
                                 "Price : ${controller.cryptoList[index].currentPrice ?? 'Empty'}"),
                             trailing: Text(
-                              controller.cryptoList[index].symbol
-                                      .toString()
-                                      .capitalize ??
-                                  'Empty',
+                              'Market cap rank : ${controller.cryptoList[index].marketCapRank}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -71,7 +79,7 @@ class HomeScreen extends GetView<CryptoController> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           controller.checkInternetConnection();
